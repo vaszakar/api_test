@@ -4,24 +4,24 @@ import requests
 from config import BASE_URL
 
 class PetAPI:
-    """Клас для методів, що працюють з ендпоінтами /pet."""
+    """Class for methods working with the /pet endpoints."""
     def __init__(self):
         self.base_url = BASE_URL
 
     def create_pet(self, payload):
-        """Метод для створення/оновлення тваринки (використовує PUT)."""
+        """Method to create/update a pet (uses PUT)."""
         url = f"{self.base_url}/pet"
         response = requests.put(url, json=payload)
         return response
 
     def get_pet_by_id(self, pet_id):
-        """Метод для отримання даних тваринки за її ID."""
+        """Method to get pet data by its ID."""
         url = f"{self.base_url}/pet/{pet_id}"
         response = requests.get(url)
         return response
 
     def delete_pet(self, pet_id):
-        """Метод для видалення тваринки за її ID з авторизацією."""
+        """Method to delete a pet by its ID with authorization."""
         url = f"{self.base_url}/pet/{pet_id}"
         headers = {'api_key': 'special-key'}
         response = requests.delete(url, headers=headers)
