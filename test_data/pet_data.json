@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Buddy_The_Dog",
+    "status": "available"
+  },
+  {
+    "name": "Lucy_The_Cat",
+    "status": "pending"
+  },
+  {
+    "name": "Rocky_The_Parrot",
+    "status": "sold"
+  }
+]
