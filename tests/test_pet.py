@@ -3,15 +3,34 @@
 import pytest
 import random
 import json
+import os
 from api.pet_api import PetAPI
+from jsonschema import validate
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 pet_api = PetAPI()
 
-
 def load_pet_data():
     """Helper function to load test data from a JSON file."""
-    with open('test_data/pet_data.json', 'r') as f:
+    path = os.path.join(BASE_DIR, 'test_data', 'pet_data.json')
+    with open(path, 'r') as f:
         return json.load(f)
+
+
+def test_get_pet_response_conforms_to_schema(created_pet_data):
+    """Test that the GET /pet/{id} response conforms to the JSON schema."""
+    # Arrange
+    path = os.path.join(BASE_DIR, 'test_data', 'pet_schema.json')
+    with open(path, 'r') as f:
+        schema = json.load(f)
+    pet_id = created_pet_data.get('id')
+    # Act
+    get_response = pet_api.get_pet_by_id(pet_id)
+    assert get_response.status_code == 200
+    response_data = get_response.json()
+    # Assert
+    validate(instance=response_data, schema=schema)
 
 
 @pytest.fixture
